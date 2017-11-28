@@ -10,11 +10,12 @@ import mongooseSetting from './config/mongooseSetting';
 import apiRoutes from './routes';
 
 dotenv.config();
+const port = process.env.PORT || 7000;
 const app = express();
 app.use(morganLogger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.set('port', process.env.PORT || 7000);
+app.set('port', port);
 app.use(express.static(path.join(__dirname, '../public')));
 // Create winston logger
 const logger = new (winston.Logger)({

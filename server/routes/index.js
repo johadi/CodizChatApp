@@ -1,7 +1,7 @@
 import router from './router';
 
 const apiRoutes = (app) => {
-  app.use(router);
+  app.use('/api', router);
 };
 
 export default apiRoutes;
