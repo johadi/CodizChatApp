@@ -1,1 +1,1 @@
-web: sequelize db:migrate && node tools/buildTools/publicServer.js
+web: node tools/buildTools/publicServer.js
