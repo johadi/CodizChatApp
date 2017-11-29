@@ -5,8 +5,9 @@ import compression from 'compression';
 import favicon from 'serve-favicon';
 import bodyParser from 'body-parser';
 import morganLogger from 'morgan';
-import winston from 'winston';
 import dotenv from 'dotenv';
+
+import logger from '../server/helpers/logger';
 import mongooseSetting from '../server/config/mongooseSetting';
 import apiRoutes from '../server/routes/index';
 
@@ -14,11 +15,6 @@ dotenv.config();
 const port = process.env.PORT || 5000;
 const app = express();
 // Create winston logger
-const logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)({ colorize: true })
-  ]
-});
 
 app.use(morganLogger('dev'));
 app.use(bodyParser.json());

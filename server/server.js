@@ -5,7 +5,8 @@ import http from 'http';
 import path from 'path';
 import dotenv from 'dotenv';
 import colors from 'colors';
-import winston from 'winston';
+
+import logger from './helpers/logger';
 import mongooseSetting from './config/mongooseSetting';
 import apiRoutes from './routes';
 
@@ -17,14 +18,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', port);
 app.use(express.static(path.join(__dirname, '../public')));
-// Create winston logger
-const logger = new (winston.Logger)({
-  transports: [
-    new (winston.transports.Console)({ colorize: true })
-  ]
-});
 // database setting
-mongooseSetting(logger);
+mongooseSetting();
 // Api routes
 apiRoutes(app);
 
