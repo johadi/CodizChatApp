@@ -24,7 +24,7 @@ app.use(express.static('public'));
 app.use(express.static('production'));
 app.use(favicon(path.join(__dirname, 'favicon2.ico')));
 // mongooseSetting
-mongooseSetting(logger);
+mongooseSetting();
 // api routes
 apiRoutes(app);
 
