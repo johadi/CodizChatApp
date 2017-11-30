@@ -19,18 +19,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('port', port);
 app.use(express.static(path.join(__dirname, '../public')));
 // database setting
-mongooseSetting();
+mongooseSetting()
+  .then(() => {
+    logger.info('database connected');
+    apiRoutes(app);
+    const server = http.createServer(app);
+    server.listen(app.get('port'), (err) => {
+      if (err) {
+        // call winston logger
+        logger.error(err);
+      }
+      // call winston logger
+      logger.info(`App running on port ${app.get('port')}`.blue);
+    });
+  })
+  .catch(() => logger.error('could\'t connect to database'));
 // Api routes
-apiRoutes(app);
-
-const server = http.createServer(app);
-server.listen(app.get('port'), (err) => {
-  if (err) {
-    // call winston logger
-    logger.error(err);
-  }
-  // call winston logger
-  logger.info(`App running on port ${app.get('port')}`.blue);
-});
-
 export default app;

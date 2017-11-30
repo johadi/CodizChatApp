@@ -23,18 +23,22 @@ app.use(compression());
 app.use(express.static('public'));
 app.use(express.static('production'));
 app.use(favicon(path.join(__dirname, 'favicon2.ico')));
-// mongooseSetting
-mongooseSetting();
-// api routes
-apiRoutes(app);
+// database setting
+mongooseSetting()
+  .then(() => {
+    logger.info('database connected');
+    // api routes
+    apiRoutes(app);
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../production/index.html'));
-});
+    app.get('*', (req, res) => {
+      res.sendFile(path.join(__dirname, '../production/index.html'));
+    });
 
-app.listen(port, (err) => {
-  if (err) {
-    return logger.error(err);
-  }
-  logger.info('app running on port', port);
-});
+    app.listen(port, (err) => {
+      if (err) {
+        return logger.error(err);
+      }
+      logger.info('app running on port', port);
+    });
+  })
+  .catch(() => logger.error('could\'t connect to database'));
