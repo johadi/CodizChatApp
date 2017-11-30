@@ -1,4 +1,4 @@
-# CodizChat is an application where developers chat on what they are currently doing. Make a top quotes for the day on what is going on in the programming atmosphere.
+*CodizChat* is an application where developers chat on what they are currently doing. Make a top quotes for the day on what is going on in the programming atmosphere.
 This application is currently under development and has no much information for now. As we progress in the application development, we will be updating to reflect.
 ## INSTALLATION
 - clone the repo
