@@ -95,10 +95,10 @@ if (TARGET === 'build:dev' || !TARGET) {
       // 0.0.0.0 is available to all network devices unlike default
       // localhost
       host: process.env.HOST,
-      port: process.env.PORT,
+      port: process.env.CLIENT_PORT,
       proxy: {
         '/api/**': {
-          target: `http://localhost:${process.env.PORT || 7000}`,
+          target: `http://localhost:${process.env.CLIENT_PORT || 7000}`,
           secure: false
         }
       }
