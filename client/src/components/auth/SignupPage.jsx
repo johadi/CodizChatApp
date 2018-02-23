@@ -8,8 +8,8 @@ class SignupPage extends React.Component {
   
   state = { email: '', password: '', error: '', loading: false }
 
-  handleSignup(e) {
-    e.preventDefault();
+  handleSignup(event) {
+    event.preventDefault();
     const { email, password } = this.state;
      return axios.post('/api/signup', { email, password })
     .then((response) => {
@@ -18,6 +18,10 @@ class SignupPage extends React.Component {
       toastr.success('Welcome,  An email will be sent to you.');
     }).catch(error => toastr.error('An error occurred'));
   }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+ }
 
   render() {
     const { success } = this.props.signupState;
@@ -33,17 +37,15 @@ class SignupPage extends React.Component {
             label='Email'
             placeholder='user@email.com'
             value={this.state.email}
-            onChangeText={email => this.setState({ email })} 
-         />
-     
-
-      
+            name="username"
+            onChange={(event) => this.handleChange(event)}
+         />    
          <input
-            secureTextEntry
             label='Password'
             placeholder='password'
+            name="password"
             value={this.state.password}
-            onChangeText={password => this.setState({ password })} 
+            onChange={(event) => this.handleChange(event)}
          />
 
         <button className="btn btn-dark" onClick={e => this.handleSignup(e)}>Sign up</button>
