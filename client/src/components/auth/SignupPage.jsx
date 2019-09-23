@@ -1,19 +1,28 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import axios from 'axios';
 import { signupAction } from '../../actions/auth/signupAction';
 
 class SignupPage extends React.Component {
-  handleSignup(e) {
-    e.preventDefault();
-    this.props.signupAction();
+  
+  state = { email: '', password: '', error: '', loading: false }
+
+  handleSignup(event) {
+    event.preventDefault();
+    const { email, password } = this.state;
+     return axios.post('/api/signup', { email, password })
+    .then((response) => {
+      const user = response.data.userData;
+      localStorage.setItem('token', response.data.myToken);
+      toastr.success('Welcome,  An email will be sent to you.');
+    }).catch(error => toastr.error('An error occurred'));
   }
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.signupState.success) {
-      console.log('next Props =======>', nextProps.signupState.success);
-      console.log('previous Props =======>', this.props.signupState.success);
-    }
-  }
+
+  handleChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
+ }
+
   render() {
     const { success } = this.props.signupState;
     return success ? (
@@ -23,8 +32,23 @@ class SignupPage extends React.Component {
     ) : (
       <div>
         <h2>Welcome! Sign up below</h2>
+              <Card>
+         <input
+            label='Email'
+            placeholder='user@email.com'
+            value={this.state.email}
+            name="username"
+            onChange={(event) => this.handleChange(event)}
+         />    
+         <input
+            label='Password'
+            placeholder='password'
+            name="password"
+            value={this.state.password}
+            onChange={(event) => this.handleChange(event)}
+         />
+
         <button className="btn btn-dark" onClick={e => this.handleSignup(e)}>Sign up</button>
-      </div>
     );
   }
 }
